@@ -8,7 +8,8 @@ import io from 'socket.io-client';
 
 import rootReducer from './reducer';
 import UserContext from './user-context';
-import { addMessage } from './features/messages/messagesSlice';
+import { addMessage } from './slices/messages';
+import { addChannel, removeChannel, renameChannel } from './slices/channels';
 
 import App from './components/App';
 
@@ -43,8 +44,21 @@ export default (gon) => {
   });
 
   const socket = io();
+
   socket.on('newMessage', ({ data: { attributes } }) => {
     store.dispatch(addMessage(attributes));
+  });
+
+  socket.on('newChannel', ({ data: { attributes } }) => {
+    store.dispatch(addChannel(attributes));
+  });
+
+  socket.on('removeChannel', ({ data: { id } }) => {
+    store.dispatch(removeChannel({ id }));
+  });
+
+  socket.on('renameChannel', ({ data: { attributes } }) => {
+    store.dispatch(renameChannel({ attributes }));
   });
 
   ReactDOM.render(
