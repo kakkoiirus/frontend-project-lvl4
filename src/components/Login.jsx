@@ -10,7 +10,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 const Login = () => {
-  const SignupSchema = Yup.object().shape({
+  const LoginSchema = Yup.object().shape({
     username: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
@@ -31,7 +31,7 @@ const Login = () => {
             validateOnChange={false}
             validateOnBlur={false}
             initialValues={{ username: '', password: '' }}
-            validationSchema={SignupSchema}
+            validationSchema={LoginSchema}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
             }}
