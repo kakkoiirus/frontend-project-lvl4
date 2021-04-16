@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Container,
   Row,
@@ -8,8 +8,18 @@ import {
 } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
+import useAuth from '../hooks/index.jsx';
 
 const Login = () => {
+  const [authFailed, setAuthFailed] = useState(false);
+  const history = useHistory();
+  const auth = useAuth();
+
+  const inputRef = useRef();
+
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
       .min(2, 'Too Short!')
@@ -23,6 +33,10 @@ const Login = () => {
       .trim(),
   });
 
+  useEffect(() => {
+    inputRef.current.focus();
+  });
+
   return (
     <Container fluid>
       <Row className="row justify-content-center pt-5">
@@ -32,8 +46,28 @@ const Login = () => {
             validateOnBlur={false}
             initialValues={{ username: '', password: '' }}
             validationSchema={LoginSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              setSubmitting(false);
+            onSubmit={async ({ username, password }, { setSubmitting }) => {
+              try {
+                const res = await axios.post(
+                  '/api/v1/login',
+                  { username, password },
+                );
+
+                const { token } = res.data;
+                localStorage.setItem('user', { token, username });
+                auth.logIn();
+                setSubmitting(false);
+                history.push('/');
+              } catch (err) {
+                setSubmitting(false);
+                if (err.response.status === 401) {
+                  setAuthFailed(true);
+                  inputRef.current.select();
+                  return;
+                }
+
+                throw err;
+              }
             }}
           >
             {({
@@ -54,7 +88,8 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.username}
-                    isInvalid={!isValid}
+                    isInvalid={!isValid || authFailed}
+                    ref={inputRef}
                   />
                 </Form.Group>
                 <Form.Group controlId="password">
@@ -67,7 +102,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
-                    isInvalid={!isValid}
+                    isInvalid={!isValid || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
                 </Form.Group>
