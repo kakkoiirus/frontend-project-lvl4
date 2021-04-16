@@ -15,7 +15,11 @@ import Login from './Login.jsx';
 import NotFound from './NotFound.jsx';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const isUserHasToken = user && user.token;
+
+  const [loggedIn, setLoggedIn] = useState(isUserHasToken);
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {

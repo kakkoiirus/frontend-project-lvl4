@@ -54,7 +54,7 @@ const Login = () => {
                 );
 
                 const { token } = res.data;
-                localStorage.setItem('user', { token, username });
+                localStorage.setItem('user', JSON.stringify({ token, username }));
                 auth.logIn();
                 setSubmitting(false);
                 history.push('/');
