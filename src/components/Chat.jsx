@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import io from 'socket.io-client';
 import { Col, Row } from 'react-bootstrap';
 
 import { setInitialState } from '../slices/channels.js';
+import { addMessage } from '../slices/messages.js';
 
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
-import ChatBox from './ChatBox.jsx';
 
 const getAuthHeader = () => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -18,6 +19,8 @@ const getAuthHeader = () => {
 
   return {};
 };
+
+const socket = io();
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -37,6 +40,10 @@ const Chat = () => {
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  socket.on('newMessage', (message) => {
+    dispatch(addMessage(message));
   });
 
   return (
@@ -44,8 +51,7 @@ const Chat = () => {
       <Channels />
       <Col className="h-100">
         <div className="d-flex flex-column h-100">
-          <Messages />
-          <ChatBox />
+          <Messages socket={socket} />
         </div>
       </Col>
     </Row>

@@ -7,17 +7,28 @@ import {
   Button,
 } from 'react-bootstrap';
 
-const ChatBox = () => {
+import useAuth from '../hooks/index.jsx';
+
+const ChatBox = ({ socket, channel }) => {
+  const { user } = useAuth();
+  const { currentChannelId } = channel;
   const inputText = useRef(null);
 
   return (
     <div className="mt-auto">
       <Formik
-        initialValues={{ message: '' }}
-        onSubmit={async ({ message }, { setSubmitting }) => {
-          console.log(message);
-          setSubmitting(false);
-          inputText.current.focus();
+        initialValues={{ body: '' }}
+        onSubmit={({ body }, { resetForm, setSubmitting }) => {
+          setSubmitting(true);
+          socket.emit('newMessage', { body, channelId: currentChannelId, username: user.username }, (res) => {
+            if (res.status === 'ok') {
+              resetForm();
+              inputText.current.focus();
+              setSubmitting(false);
+              return;
+            }
+            setSubmitting(false);
+          });
         }}
       >
         {({
@@ -32,8 +43,8 @@ const ChatBox = () => {
               <FormControl
                 autoFocus
                 type="text"
-                name="message"
-                value={values.message}
+                name="body"
+                value={values.body}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
