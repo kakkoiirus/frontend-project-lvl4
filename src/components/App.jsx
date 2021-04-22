@@ -15,7 +15,9 @@ import Login from './Login.jsx';
 import NotFound from './NotFound.jsx';
 
 const AuthProvider = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const data = localStorage.getItem('user');
+
+  const user = data ? JSON.parse(data) : null;
 
   const isUserHasToken = user && user.token;
 
