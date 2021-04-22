@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import ChatBox from './ChatBox.jsx';
 
-const Messages = ({ socket }) => {
+const Messages = () => {
   const { messages } = useSelector((state) => state.messagesData);
   const channel = useSelector((state) => state.channelsData);
 
@@ -25,7 +25,7 @@ const Messages = ({ socket }) => {
             </div>
           ))}
       </div>
-      <ChatBox socket={socket} channel={channel} />
+      <ChatBox channel={channel} />
     </>
   );
 };

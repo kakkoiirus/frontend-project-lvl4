@@ -5,14 +5,15 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
 
 import authContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
 
+import Nav from './Nav.jsx';
 import Chat from './Chat.jsx';
 import Login from './Login.jsx';
 import NotFound from './NotFound.jsx';
+import Signup from './Signup.jsx';
 
 const AuthProvider = ({ children }) => {
   const data = localStorage.getItem('user');
@@ -23,7 +24,11 @@ const AuthProvider = ({ children }) => {
 
   const [loggedIn, setLoggedIn] = useState(isUserHasToken);
 
-  const logIn = () => setLoggedIn(true);
+  const logIn = ({ token, username }) => {
+    localStorage.setItem('user', JSON.stringify({ token, username }));
+    setLoggedIn(true);
+  };
+
   const logOut = () => {
     localStorage.removeItem('user');
     setLoggedIn(false);
@@ -62,17 +67,16 @@ const App = () => {
     <AuthProvider>
       <Router>
         <div className="d-flex flex-column h-100">
-          <Navbar className="mb-3" bg="light" expand="lg">
-            <Navbar.Brand className="mr-auto" href="/">
-              Hexlet Chat
-            </Navbar.Brand>
-          </Navbar>
+          <Nav />
           <Switch>
             <PrivateRoute exact path="/">
               <Chat />
             </PrivateRoute>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
             </Route>
             <Route>
               <NotFound />

@@ -5,6 +5,7 @@ export default {
       submit: 'Отправить',
       remove: 'Удалить',
       rename: 'Переименовать',
+      logout: 'Выйти',
     },
     channels: 'Каналы',
     login: {
@@ -15,15 +16,22 @@ export default {
       noprofile: 'Нет аккаунта?',
       error: 'Неверные имя пользователя или пароль',
     },
-    messages: {
-      errors: {
-        invalidUrl: 'Ссылка должна быть валидным URL',
-        alreadyExist: 'RSS уже существует',
-        wrongResource: 'Ресурс не содержит валидный RSS',
-        network: 'Ошибка сети',
+    signup: {
+      username: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      submit: 'Зарегистрироваться',
+      placeholders: {
+        username: 'От 3 до 20 символов',
+        password: 'Не менее 6 символов',
+        confirmPassword: 'Пароли должны совпадать',
       },
-      success: {
-        loaded: 'RSS успешно загружен',
+      errors: {
+        required: 'Обязательное поле',
+        usernameLength: 'От 3 до 20 символов',
+        passwordLength: 'Не менее 6 символов',
+        passwordNotEqual: 'Пароли должны совпадать',
+        alreadyExist: 'Такой пользователь уже существует',
       },
     },
   },

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import {
@@ -8,9 +8,11 @@ import {
   Button,
 } from 'react-bootstrap';
 
+import ServerContext from '../contexts/serverContext.js';
 import useAuth from '../hooks/index.jsx';
 
-const ChatBox = ({ socket, channel }) => {
+const ChatBox = ({ channel }) => {
+  const { sendMessage } = useContext(ServerContext);
   const { t } = useTranslation();
   const { user } = useAuth();
   const { currentChannelId } = channel;
@@ -22,7 +24,7 @@ const ChatBox = ({ socket, channel }) => {
         initialValues={{ body: '' }}
         onSubmit={({ body }, { resetForm, setSubmitting }) => {
           setSubmitting(true);
-          socket.emit('newMessage', { body, channelId: currentChannelId, username: user.username }, (res) => {
+          sendMessage({ body, channelId: currentChannelId, username: user.username }, (res) => {
             if (res.status === 'ok') {
               resetForm();
               inputText.current.focus();

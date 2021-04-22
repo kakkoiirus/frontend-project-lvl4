@@ -12,6 +12,7 @@ import rootReducer from './reducer.js';
 import ServerContext from './contexts/serverContext.js';
 
 import { addChannel, removeChannel, renameChannel } from './slices/channels.js';
+import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
 
@@ -44,6 +45,10 @@ socket.on('renameChannel', (channel) => {
   store.dispatch(renameChannel(channel));
 });
 
+socket.on('newMessage', (message) => {
+  store.dispatch(addMessage(message));
+});
+
 const serverContextValue = {
   createChannel: (name, acknowledge) => {
     socket.emit('newChannel', { name }, acknowledge);
@@ -53,6 +58,9 @@ const serverContextValue = {
   },
   renameChannel: ({ id, name }, acknowledge) => {
     socket.emit('renameChannel', { id, name }, acknowledge);
+  },
+  sendMessage: (message, acknowledge) => {
+    socket.emit('newMessage', message, acknowledge);
   },
 };
 

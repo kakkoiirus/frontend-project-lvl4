@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Container,
@@ -10,7 +11,6 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import useAuth from '../hooks/index.jsx';
 
@@ -56,8 +56,8 @@ const Login = () => {
                 );
 
                 const { token } = res.data;
-                localStorage.setItem('user', JSON.stringify({ token, username }));
-                auth.logIn();
+
+                auth.logIn({ token, username });
                 setSubmitting(false);
                 history.push('/');
               } catch (err) {
@@ -118,7 +118,7 @@ const Login = () => {
                 </Button>
                 <div className="d-flex flex-column align-items-center">
                   <span className="small mb-2">{t('login.noprofile')}</span>
-                  <a href="/">{t('login.signup')}</a>
+                  <a href="/signup">{t('login.signup')}</a>
                 </div>
               </Form>
             )}
