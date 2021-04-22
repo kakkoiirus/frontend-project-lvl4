@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import {
   Form,
@@ -10,6 +11,7 @@ import {
 import useAuth from '../hooks/index.jsx';
 
 const ChatBox = ({ socket, channel }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { currentChannelId } = channel;
   const inputText = useRef(null);
@@ -51,7 +53,7 @@ const ChatBox = ({ socket, channel }) => {
                 ref={inputText}
               />
               <InputGroup.Append>
-                <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
+                <Button variant="primary" type="submit" disabled={isSubmitting}>{t('controls.submit')}</Button>
               </InputGroup.Append>
             </InputGroup>
           </Form>

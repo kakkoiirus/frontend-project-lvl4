@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import { io } from 'socket.io-client';
+
+import resources from './locales/index.js';
 
 import rootReducer from './reducer.js';
 import ServerContext from './contexts/serverContext.js';
@@ -10,6 +14,17 @@ import ServerContext from './contexts/serverContext.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channels.js';
 
 import App from './components/App.jsx';
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    resources,
+    lng: 'ru',
+
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 const store = configureStore({
   reducer: rootReducer,

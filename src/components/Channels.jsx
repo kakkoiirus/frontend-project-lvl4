@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Nav,
@@ -24,6 +25,7 @@ const renderModal = (modalInfo) => {
 const Channels = () => {
   const { channels, currentChannelId } = useSelector((state) => state.channelsData);
   const modalInfo = useSelector((state) => state.modalData);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const onChannelClick = (id) => () => {
@@ -74,8 +76,8 @@ const Channels = () => {
         className="flex-grow-0"
       />
       <Dropdown.Menu>
-        <Dropdown.Item onClick={onRemoveChannel(id)}>Remove</Dropdown.Item>
-        <Dropdown.Item onClick={onRenameChannel(id)}>Rename</Dropdown.Item>
+        <Dropdown.Item onClick={onRemoveChannel(id)}>{t('controls.remove')}</Dropdown.Item>
+        <Dropdown.Item onClick={onRenameChannel(id)}>{t('controls.rename')}</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -84,7 +86,7 @@ const Channels = () => {
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>
-          Channels
+          {t('channels')}
         </span>
         <Button
           className="ml-auto p-0"

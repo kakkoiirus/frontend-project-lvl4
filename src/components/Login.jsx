@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   Row,
@@ -17,6 +18,7 @@ const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const history = useHistory();
   const auth = useAuth();
+  const { t } = useTranslation();
 
   const inputRef = useRef();
 
@@ -80,7 +82,7 @@ const Login = () => {
             }) => (
               <Form className="p-3" onSubmit={handleSubmit}>
                 <Form.Group controlId="username">
-                  <Form.Label>Ваш ник</Form.Label>
+                  <Form.Label>{t('login.username')}</Form.Label>
                   <Form.Control
                     name="username"
                     autoComplete="username"
@@ -93,7 +95,7 @@ const Login = () => {
                   />
                 </Form.Group>
                 <Form.Group controlId="password">
-                  <Form.Label>Пароль</Form.Label>
+                  <Form.Label>{t('login.password')}</Form.Label>
                   <Form.Control
                     name="password"
                     type="password"
@@ -104,7 +106,7 @@ const Login = () => {
                     value={values.password}
                     isInvalid={!isValid || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{t('login.error')}</Form.Control.Feedback>
                 </Form.Group>
                 <Button
                   variant="outline-primary"
@@ -112,10 +114,11 @@ const Login = () => {
                   className="w-100 mb-3"
                   disabled={isSubmitting}
                 >
-                  Войти
+                  {t('login.signin')}
                 </Button>
                 <div className="d-flex flex-column align-items-center">
-                  <span className="small mb-2">Нет аккаунта?</span>
+                  <span className="small mb-2">{t('login.noprofile')}</span>
+                  <a href="/">{t('login.signup')}</a>
                 </div>
               </Form>
             )}
