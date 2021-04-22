@@ -8,13 +8,38 @@ import {
 } from 'react-bootstrap';
 
 import { setCurrentChannel } from '../slices/channels.js';
+import { openModal } from '../slices/modal.js';
+
+import getModal from './modals/index.js';
+
+const renderModal = (modalInfo) => {
+  if (!modalInfo.type) {
+    return null;
+  }
+
+  const Component = getModal(modalInfo.type);
+  return <Component modalInfo={modalInfo} />;
+};
 
 const Channels = () => {
   const { channels, currentChannelId } = useSelector((state) => state.channelsData);
+  const modalInfo = useSelector((state) => state.modalData);
   const dispatch = useDispatch();
 
-  const onChannelClick = (id) => async () => {
+  const onChannelClick = (id) => () => {
     dispatch(setCurrentChannel({ id }));
+  };
+
+  const onAddChannel = () => {
+    dispatch(openModal({ type: 'addChannel' }));
+  };
+
+  const onRemoveChannel = (channelId) => () => {
+    dispatch(openModal({ type: 'removeChannel', extra: { channelId } }));
+  };
+
+  const onRenameChannel = (channelId) => () => {
+    dispatch(openModal({ type: 'renameChannel', extra: { channelId } }));
   };
 
   const getNonRemovableNav = (id, name) => (
@@ -49,8 +74,8 @@ const Channels = () => {
         className="flex-grow-0"
       />
       <Dropdown.Menu>
-        <Dropdown.Item onClick={onChannelClick(id)}>Remove</Dropdown.Item>
-        <Dropdown.Item onClick={onChannelClick(id)}>Rename</Dropdown.Item>
+        <Dropdown.Item onClick={onRemoveChannel(id)}>Remove</Dropdown.Item>
+        <Dropdown.Item onClick={onRenameChannel(id)}>Rename</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -64,7 +89,7 @@ const Channels = () => {
         <Button
           className="ml-auto p-0"
           variant="link"
-          onClick={onChannelClick}
+          onClick={onAddChannel}
         >
           +
         </Button>
@@ -76,6 +101,7 @@ const Channels = () => {
           ))}
         </Nav.Item>
       </Nav>
+      {renderModal(modalInfo)}
     </div>
   );
 };
