@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { io } from 'socket.io-client';
+import Rollbar from 'rollbar';
 
 import resources from './locales/index.js';
 
@@ -15,6 +16,14 @@ import { addChannel, removeChannel, renameChannel } from './slices/channels.js';
 import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
+
+if (process.env.NODE_ENV === 'production') {
+  new Rollbar({
+    accessToken: 'e9244475a747409297831035fd94e638',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+  });
+}
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
