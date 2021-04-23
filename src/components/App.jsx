@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import authContext from '../contexts/index.jsx';
+import authContext from '../contexts/authContext.js';
 import useAuth from '../hooks/index.jsx';
 
 import Nav from './Nav.jsx';
