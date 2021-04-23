@@ -18,15 +18,19 @@ import { addMessage } from './slices/messages.js';
 import App from './components/App.jsx';
 
 if (process.env.NODE_ENV === 'production') {
-  new Rollbar({
-    accessToken: 'e9244475a747409297831035fd94e638',
+  const rollbar = new Rollbar();
+  rollbar.configure({
+    accessToken: '273512464d8d489e8d131086a5634ce7',
     captureUncaught: true,
     captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
   });
 }
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
     resources,
     lng: 'ru',
