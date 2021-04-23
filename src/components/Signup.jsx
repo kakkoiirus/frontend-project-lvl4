@@ -24,23 +24,23 @@ const Signup = () => {
 
   setLocale({
     mixed: {
-      required: 'signup.errors.required',
+      required: 'errors.required',
     },
   });
 
-  const LoginSchema = Yup.object().shape({
+  const SignupSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'signup.errors.usernameLength')
-      .max(20, 'signup.errors.usernameLength')
+      .min(3, 'errors.usernameLength')
+      .max(20, 'errors.usernameLength')
       .required()
       .trim(),
     password: Yup.string()
-      .min(6, 'signup.errors.passwordLength')
+      .min(6, 'errors.passwordLength')
       .required()
       .trim(),
     confirmPassword: Yup.string()
-      .min(6, 'signup.errors.passwordLength')
-      .oneOf([Yup.ref('password')], 'signup.errors.passwordNotEqual')
+      .min(6, 'errors.passwordLength')
+      .oneOf([Yup.ref('password')], 'errors.passwordNotEqual')
       .required()
       .trim(),
   });
@@ -59,7 +59,7 @@ const Signup = () => {
               password: '',
               confirmPassword: '',
             }}
-            validationSchema={LoginSchema}
+            validationSchema={SignupSchema}
             onSubmit={async ({ username, password }, { setSubmitting }) => {
               try {
                 const res = await axios.post(
@@ -75,7 +75,7 @@ const Signup = () => {
               } catch (err) {
                 setSubmitting(false);
                 if (err.response.status === 409) {
-                  setAuthError('signup.errors.alreadyExist');
+                  setAuthError('errors.alreadyExist');
                   inputRef.current.select();
                   return;
                 }

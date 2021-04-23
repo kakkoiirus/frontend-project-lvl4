@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { io } from 'socket.io-client';
 
 import resources from './locales/index.js';
@@ -66,11 +66,13 @@ const serverContextValue = {
 
 export default () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <ServerContext.Provider value={serverContextValue}>
-        <App />
-      </ServerContext.Provider>
-    </Provider>,
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <ServerContext.Provider value={serverContextValue}>
+          <App />
+        </ServerContext.Provider>
+      </Provider>
+    </I18nextProvider>,
     document.querySelector('#chat'),
   );
 };

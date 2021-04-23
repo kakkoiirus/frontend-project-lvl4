@@ -1,5 +1,6 @@
 import React, { useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import {
   Modal,
@@ -8,6 +9,8 @@ import {
   FormControl,
 } from 'react-bootstrap';
 import _ from 'lodash';
+import * as Yup from 'yup';
+import { setLocale } from 'yup';
 
 import ServerContext from '../../contexts/serverContext.js';
 import { closeModal } from '../../slices/modal.js';
@@ -18,8 +21,21 @@ const RenameChannel = ({ modalInfo }) => {
   const { renameChannel } = useContext(ServerContext);
   const inputField = useRef(null);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const channel = _.find(channels, (c) => c.id === channelId);
+
+  setLocale({
+    mixed: {
+      required: 'errors.required',
+    },
+  });
+
+  const RenameChannelSchema = Yup.object().shape({
+    chatName: Yup.string()
+      .required()
+      .trim(),
+  });
 
   const onClose = () => {
     dispatch(closeModal());
@@ -33,13 +49,14 @@ const RenameChannel = ({ modalInfo }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          Rename channel
+          {t('modal.renameChannel')}
         </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Formik
           initialValues={{ chatName: channel.name }}
+          validationSchema={RenameChannelSchema}
           onSubmit={({ chatName }, { setSubmitting }) => {
             renameChannel({ id: channelId, name: chatName }, (res) => {
               if (res.status === 'ok') {
@@ -58,35 +75,41 @@ const RenameChannel = ({ modalInfo }) => {
             handleSubmit,
             handleBlur,
             values,
+            errors,
+            touched,
           }) => (
             <Form onSubmit={handleSubmit}>
-              <FormControl
-                autoFocus
-                type="text"
-                name="chatName"
-                className="mb-2"
-                value={values.chatName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isSubmitting}
-                ref={inputField}
-              />
-              <div className="d-flex justify-content-end">
-                <Button
-                  className="mr-2"
-                  variant="secondary"
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  variant="primary"
+              <Form.Group controlId="chatName">
+                <FormControl
+                  autoFocus
+                  type="text"
+                  name="chatName"
+                  className="mb-2"
+                  value={values.chatName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   disabled={isSubmitting}
-                >
-                  Submit
-                </Button>
-              </div>
+                  ref={inputField}
+                  isInvalid={errors.chatName && touched.chatName}
+                />
+                <Form.Control.Feedback type="invalid">{errors.chatName && touched.chatName ? t(errors.chatName) : null}</Form.Control.Feedback>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    className="mr-2"
+                    variant="secondary"
+                    onClick={onClose}
+                  >
+                    {t('controls.cancel')}
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={isSubmitting}
+                  >
+                    {t('controls.submit')}
+                  </Button>
+                </div>
+              </Form.Group>
             </Form>
           )}
         </Formik>

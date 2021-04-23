@@ -60,32 +60,28 @@ const PrivateRoute = ({ children, path }) => {
   );
 };
 
-const App = () => {
-  console.log('App');
-
-  return (
-    <AuthProvider>
-      <Router>
-        <div className="d-flex flex-column h-100">
-          <Nav />
-          <Switch>
-            <PrivateRoute exact path="/">
-              <Chat />
-            </PrivateRoute>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </AuthProvider>
-  );
-};
+const App = () => (
+  <AuthProvider>
+    <Router>
+      <div className="d-flex flex-column h-100">
+        <Nav />
+        <Switch>
+          <PrivateRoute exact path="/">
+            <Chat />
+          </PrivateRoute>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  </AuthProvider>
+);
 
 export default App;

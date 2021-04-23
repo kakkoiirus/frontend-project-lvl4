@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Container,
@@ -24,14 +24,14 @@ const Login = () => {
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required')
+      .min(2)
+      .max(50)
+      .required()
       .trim(),
     password: Yup.string()
-      .min(5, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required')
+      .min(5)
+      .max(50)
+      .required()
       .trim(),
   });
 
@@ -118,7 +118,7 @@ const Login = () => {
                 </Button>
                 <div className="d-flex flex-column align-items-center">
                   <span className="small mb-2">{t('login.noprofile')}</span>
-                  <a href="/signup">{t('login.signup')}</a>
+                  <Link to="/signup">{t('login.signup')}</Link>
                 </div>
               </Form>
             )}

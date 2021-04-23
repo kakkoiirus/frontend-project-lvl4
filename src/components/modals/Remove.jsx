@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Modal,
   Button,
@@ -12,6 +13,7 @@ const RemoveChannel = ({ modalInfo }) => {
   const { isOpened, extra: { channelId } } = modalInfo;
   const { removeChannel } = useContext(ServerContext);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onClose = () => {
     dispatch(closeModal());
@@ -32,24 +34,24 @@ const RemoveChannel = ({ modalInfo }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          Remove channel
+          {t('modal.removeChannel')}
         </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        Are you sure?
+        {t('modal.confirmationText')}
         <div className="d-flex justify-content-between">
           <Button
             variant="secondary"
             onClick={onClose}
           >
-            Cancel
+            {t('controls.cancel')}
           </Button>
           <Button
             variant="danger"
             onClick={onRemoveClick(channelId)}
           >
-            Confirm
+            {t('controls.remove')}
           </Button>
         </div>
       </Modal.Body>

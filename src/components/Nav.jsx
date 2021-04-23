@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Navbar, Button } from 'react-bootstrap';
@@ -18,7 +18,7 @@ const Nav = () => {
 
   return (
     <Navbar className="mb-3" bg="light" expand="lg">
-      <Navbar.Brand className="mr-auto" href="/">
+      <Navbar.Brand className="mr-auto" to="/" as={Link}>
         Hexlet Chat
       </Navbar.Brand>
       {auth.loggedIn && (
