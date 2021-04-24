@@ -86,6 +86,6 @@ export default () => {
         </ServerContext.Provider>
       </Provider>
     </I18nextProvider>,
-    document.querySelector('#chat'),
+    document.getElementById('chat'),
   );
 };
