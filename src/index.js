@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const run = async () => {
   const socket = io();
-  const app = await init(socket);
+  const app = await init({ socketClient: socket });
   ReactDOM.render(
     app,
     document.getElementById('chat'),

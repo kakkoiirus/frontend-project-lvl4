@@ -15,7 +15,7 @@ import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
 
-export default async (socket) => {
+export default async ({ socketClient: socket }) => {
   if (process.env.NODE_ENV === 'production') {
     const rollbar = new Rollbar();
     rollbar.configure({
