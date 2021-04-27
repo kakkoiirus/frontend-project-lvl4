@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
@@ -17,7 +16,7 @@ import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
 
-export default async () => {
+export default () => {
   if (process.env.NODE_ENV === 'production') {
     const rollbar = new Rollbar();
     rollbar.configure({
@@ -30,7 +29,7 @@ export default async () => {
     });
   }
 
-  await i18n
+  i18n
     .use(initReactI18next)
     .init({
       resources,
@@ -78,14 +77,13 @@ export default async () => {
     },
   };
 
-  ReactDOM.render(
+  return (
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
         <ServerContext.Provider value={serverContextValue}>
           <App />
         </ServerContext.Provider>
       </Provider>
-    </I18nextProvider>,
-    document.getElementById('chat'),
+    </I18nextProvider>
   );
 };

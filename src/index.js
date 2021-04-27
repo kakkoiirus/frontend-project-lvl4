@@ -2,6 +2,7 @@
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
+import ReactDOM from 'react-dom';
 
 import '../assets/application.scss';
 
@@ -11,6 +12,9 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-app();
+ReactDOM.render(
+  app(),
+  document.getElementById('chat'),
+);
 
 console.log('it works!');
