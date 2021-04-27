@@ -44,7 +44,7 @@ const Login = () => {
             validateOnBlur={false}
             initialValues={{ username: '', password: '' }}
             validationSchema={LoginSchema}
-            onSubmit={async ({ username, password }, { setSubmitting }) => {
+            onSubmit={async ({ username, password }) => {
               try {
                 const res = await axios.post(
                   '/api/v1/login',
@@ -54,10 +54,8 @@ const Login = () => {
                 const { token } = res.data;
 
                 auth.logIn({ token, username });
-                setSubmitting(false);
                 history.push('/');
               } catch (err) {
-                setSubmitting(false);
                 if (err.response.status === 401) {
                   setAuthFailed(true);
                   inputRef.current.select();

@@ -46,8 +46,7 @@ const ChatBox = ({ channel }) => {
             <InputGroup>
               <FormControl
                 autoFocus
-                type="text"
-                role="textbox"
+                aria-label="body"
                 name="body"
                 value={values.body}
                 onChange={handleChange}
