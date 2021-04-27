@@ -3,7 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
-import { io } from 'socket.io-client';
 import Rollbar from 'rollbar';
 
 import resources from './locales/index.js';
@@ -16,7 +15,7 @@ import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
 
-export default () => {
+export default async (socket) => {
   if (process.env.NODE_ENV === 'production') {
     const rollbar = new Rollbar();
     rollbar.configure({
@@ -29,7 +28,7 @@ export default () => {
     });
   }
 
-  i18n
+  await i18n
     .use(initReactI18next)
     .init({
       resources,
@@ -43,8 +42,6 @@ export default () => {
   const store = configureStore({
     reducer: rootReducer,
   });
-
-  const socket = io();
 
   socket.on('newChannel', (channel) => {
     store.dispatch(addChannel(channel));

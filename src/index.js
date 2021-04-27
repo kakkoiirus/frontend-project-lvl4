@@ -3,18 +3,25 @@
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import ReactDOM from 'react-dom';
+import { io } from 'socket.io-client';
 
 import '../assets/application.scss';
 
-import app from './init.jsx';
+import init from './init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-ReactDOM.render(
-  app(),
-  document.getElementById('chat'),
-);
+const run = async () => {
+  const socket = io();
+  const app = await init(socket);
+  ReactDOM.render(
+    app,
+    document.getElementById('chat'),
+  );
+};
+
+run();
 
 console.log('it works!');
