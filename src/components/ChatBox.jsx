@@ -47,6 +47,7 @@ const ChatBox = ({ channel }) => {
               <FormControl
                 autoFocus
                 type="text"
+                role="textbox"
                 name="body"
                 value={values.body}
                 onChange={handleChange}
