@@ -24,13 +24,9 @@ const Login = () => {
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
-      .min(2)
-      .max(50)
       .required()
       .trim(),
     password: Yup.string()
-      .min(5)
-      .max(50)
       .required()
       .trim(),
   });
