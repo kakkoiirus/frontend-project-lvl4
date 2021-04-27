@@ -17,7 +17,7 @@ import { addMessage } from './slices/messages.js';
 
 import App from './components/App.jsx';
 
-export default () => {
+export default async () => {
   if (process.env.NODE_ENV === 'production') {
     const rollbar = new Rollbar();
     rollbar.configure({
@@ -30,7 +30,7 @@ export default () => {
     });
   }
 
-  i18n
+  await i18n
     .use(initReactI18next)
     .init({
       resources,
