@@ -22,14 +22,14 @@ const ChatBox = ({ channel }) => {
     <div className="mt-auto">
       <Formik
         initialValues={{ body: '' }}
-        onSubmit={({ body }, { resetForm, setSubmitting }) => {
-          sendMessage({ body, channelId: currentChannelId, username: user.username }, (res) => {
-            if (res.status === 'ok') {
-              resetForm();
-              inputText.current.focus();
-            }
-            setSubmitting(false);
-          });
+        onSubmit={async ({ body }, { resetForm, setSubmitting }) => {
+          const message = { body, channelId: currentChannelId, username: user.username };
+          const res = await sendMessage(message);
+          if (res === 'ok') {
+            resetForm();
+            inputText.current.focus();
+          }
+          setSubmitting(false);
         }}
       >
         {({
