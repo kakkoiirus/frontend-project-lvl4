@@ -75,7 +75,7 @@ export default async (socket) => {
           if (res.status === 'ok') {
             resolve(res.status);
           }
-          reject();
+          reject(new Error(res.status));
         });
       })
     ),

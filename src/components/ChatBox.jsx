@@ -1,5 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import { setLocale } from 'yup';
 import { Formik } from 'formik';
 import {
   Form,
@@ -10,6 +12,18 @@ import {
 
 import ServerContext from '../contexts/serverContext.js';
 import useAuth from '../hooks/index.jsx';
+
+setLocale({
+  mixed: {
+    required: 'errors.required',
+  },
+});
+
+const MessageSchema = Yup.object().shape({
+  body: Yup.string()
+    .required()
+    .trim(),
+});
 
 const ChatBox = ({ channel }) => {
   const { sendMessage } = useContext(ServerContext);
@@ -22,6 +36,7 @@ const ChatBox = ({ channel }) => {
     <div className="mt-auto">
       <Formik
         initialValues={{ body: '' }}
+        validationSchema={MessageSchema}
         onSubmit={async ({ body }, { resetForm, setSubmitting }) => {
           const message = { body, channelId: currentChannelId, username: user.username };
           const res = await sendMessage(message);
@@ -38,6 +53,8 @@ const ChatBox = ({ channel }) => {
           handleSubmit,
           handleBlur,
           values,
+          errors,
+          touched,
         }) => (
           <Form onSubmit={handleSubmit}>
             <InputGroup>
@@ -49,11 +66,13 @@ const ChatBox = ({ channel }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                isInvalid={errors.body && touched.body}
                 ref={inputText}
               />
               <InputGroup.Append>
                 <Button variant="primary" type="submit" disabled={isSubmitting}>{t('controls.submit')}</Button>
               </InputGroup.Append>
+              <Form.Control.Feedback type="invalid">{errors.body && touched.body ? t(errors.body) : null}</Form.Control.Feedback>
             </InputGroup>
           </Form>
         )}
