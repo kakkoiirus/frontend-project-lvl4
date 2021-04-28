@@ -23,13 +23,10 @@ const ChatBox = ({ channel }) => {
       <Formik
         initialValues={{ body: '' }}
         onSubmit={({ body }, { resetForm, setSubmitting }) => {
-          setSubmitting(true);
           sendMessage({ body, channelId: currentChannelId, username: user.username }, (res) => {
             if (res.status === 'ok') {
               resetForm();
               inputText.current.focus();
-              setSubmitting(false);
-              return;
             }
             setSubmitting(false);
           });
