@@ -38,14 +38,15 @@ const ChatBox = ({ channel }) => {
         initialValues={{ body: '' }}
         validateOnBlur={false}
         validationSchema={MessageSchema}
-        onSubmit={async ({ body }, { resetForm, setSubmitting }) => {
+        onSubmit={({ body }, { resetForm, setSubmitting }) => {
           const message = { body, channelId: currentChannelId, username: user.username };
-          const res = await sendMessage(message);
-          if (res === 'ok') {
-            resetForm();
-            inputText.current.focus();
-          }
-          setSubmitting(false);
+          sendMessage(message, (res) => {
+            if (res.status === 'ok') {
+              resetForm();
+              inputText.current.focus();
+            }
+            setSubmitting(false);
+          });
         }}
       >
         {({

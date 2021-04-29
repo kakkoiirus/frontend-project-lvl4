@@ -69,16 +69,9 @@ export default async (socket) => {
     renameChannel: ({ id, name }, acknowledge) => {
       socket.emit('renameChannel', { id, name }, acknowledge);
     },
-    sendMessage: (message) => (
-      new Promise((resolve, reject) => {
-        socket.emit('newMessage', message, (res) => {
-          if (res.status === 'ok') {
-            resolve(res.status);
-          }
-          reject(new Error(res.status));
-        });
-      })
-    ),
+    sendMessage: (message, acknowledge) => {
+      socket.emit('newMessage', message, acknowledge);
+    },
   };
 
   return (
