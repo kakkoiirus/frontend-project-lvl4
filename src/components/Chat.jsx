@@ -22,19 +22,23 @@ const Chat = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((state) => state.channelsData);
 
-  useEffect(async () => {
-    const authHeader = getAuthHeader();
+  useEffect(() => {
+    const fetchData = async () => {
+      const authHeader = getAuthHeader();
 
-    try {
-      const res = await axios.get(
-        '/api/v1/data',
-        { headers: authHeader },
-      );
+      try {
+        const res = await axios.get(
+          '/api/v1/data',
+          { headers: authHeader },
+        );
 
-      dispatch(setInitialState(res.data));
-    } catch (err) {
-      throw new Error(err);
-    }
+        dispatch(setInitialState(res.data));
+      } catch (err) {
+        throw new Error(err);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
