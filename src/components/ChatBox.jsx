@@ -25,17 +25,18 @@ const MessageSchema = Yup.object().shape({
     .trim(),
 });
 
-const ChatBox = ({ channel }) => {
+const ChatBox = ({ channels }) => {
   const { sendMessage } = useContext(ServerContext);
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { currentChannelId } = channel;
+  const { currentChannelId } = channels;
   const inputText = useRef(null);
 
   return (
     <div className="mt-auto">
       <Formik
         initialValues={{ body: '' }}
+        validateOnBlur={false}
         validationSchema={MessageSchema}
         onSubmit={async ({ body }, { resetForm, setSubmitting }) => {
           const message = { body, channelId: currentChannelId, username: user.username };

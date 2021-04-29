@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Col, Row } from 'react-bootstrap';
 
@@ -20,7 +20,8 @@ const getAuthHeader = () => {
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const [status, setStatus] = useState('loading');
+  const { channels, currentChannelId } = useSelector((state) => state.channelsData);
+  const { messages } = useSelector((state) => state.messagesData);
 
   useEffect(async () => {
     const authHeader = getAuthHeader();
@@ -31,23 +32,20 @@ const Chat = () => {
         { headers: authHeader },
       );
 
-      const { channels, currentChannelId, messages } = res.data;
-
-      setStatus('finished');
-      dispatch(setInitialState({ channels, currentChannelId, messages }));
+      dispatch(setInitialState(res.data));
     } catch (err) {
       throw new Error(err);
     }
   }, []);
 
   return (
-    status !== 'loading'
+    (channels && currentChannelId)
     && (
       <Row className="flex-grow-1 h-75 pb-3">
-        <Channels />
+        <Channels channels={channels} currentChannelId={currentChannelId} />
         <Col className="h-100">
           <div className="d-flex flex-column h-100">
-            <Messages />
+            <Messages messages={messages} channels={channels} />
           </div>
         </Col>
       </Row>

@@ -22,8 +22,7 @@ const renderModal = (modalInfo) => {
   return <Component modalInfo={modalInfo} />;
 };
 
-const Channels = () => {
-  const { channels, currentChannelId } = useSelector((state) => state.channelsData);
+const Channels = ({ channels, currentChannelId }) => {
   const modalInfo = useSelector((state) => state.modalData);
   const { t } = useTranslation();
   const dispatch = useDispatch();
