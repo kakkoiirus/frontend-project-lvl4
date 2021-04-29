@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Spinner } from 'react-bootstrap';
 
 import { setInitialState } from '../slices/channels.js';
 
@@ -42,17 +42,22 @@ const Chat = () => {
   }, [dispatch]);
 
   return (
-    (channels && currentChannelId)
-    && (
-      <Row className="flex-grow-1 h-75 pb-3">
-        <Channels />
-        <Col className="h-100">
-          <div className="d-flex flex-column h-100">
-            <Messages />
-          </div>
-        </Col>
-      </Row>
-    )
+    (!channels && !currentChannelId)
+      ? (
+        <Row className="flex-grow-1 h-75 pb-3">
+          <Channels />
+          <Col className="h-100">
+            <div className="d-flex flex-column h-100">
+              <Messages />
+            </div>
+          </Col>
+        </Row>
+      )
+      : (
+        <Spinner animation="border" role="status" className="mx-auto">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      )
   );
 };
 
