@@ -88,6 +88,7 @@ const AddChannel = ({ modalInfo }) => {
                   disabled={isSubmitting}
                   ref={inputField}
                   isInvalid={errors.chatName && touched.chatName}
+                  data-testid="add-channel"
                 />
                 <Form.Control.Feedback type="invalid">{errors.chatName && touched.chatName ? t(errors.chatName) : null}</Form.Control.Feedback>
                 <div className="d-flex justify-content-end">
