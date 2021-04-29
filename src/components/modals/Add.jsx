@@ -13,6 +13,7 @@ import { setLocale } from 'yup';
 
 import ServerContext from '../../contexts/serverContext.js';
 import { closeModal } from '../../slices/modal.js';
+import { setCurrentChannel } from '../../slices/channels.js';
 
 const AddChannel = ({ modalInfo }) => {
   const { isOpened } = modalInfo;
@@ -59,6 +60,7 @@ const AddChannel = ({ modalInfo }) => {
           onSubmit={({ chatName }, { setSubmitting }) => {
             createChannel(chatName, (res) => {
               if (res.status === 'ok') {
+                dispatch(setCurrentChannel({ id: res.data.id }));
                 setSubmitting(false);
                 onClose();
                 return;
