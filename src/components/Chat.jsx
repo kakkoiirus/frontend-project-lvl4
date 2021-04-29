@@ -21,7 +21,6 @@ const getAuthHeader = () => {
 const Chat = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((state) => state.channelsData);
-  const { messages } = useSelector((state) => state.messagesData);
 
   useEffect(async () => {
     const authHeader = getAuthHeader();
@@ -42,10 +41,10 @@ const Chat = () => {
     (channels && currentChannelId)
     && (
       <Row className="flex-grow-1 h-75 pb-3">
-        <Channels channels={channels} currentChannelId={currentChannelId} />
+        <Channels />
         <Col className="h-100">
           <div className="d-flex flex-column h-100">
-            <Messages messages={messages} channels={channels} />
+            <Messages />
           </div>
         </Col>
       </Row>

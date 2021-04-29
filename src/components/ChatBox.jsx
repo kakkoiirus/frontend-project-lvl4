@@ -25,11 +25,11 @@ const MessageSchema = Yup.object().shape({
     .trim(),
 });
 
-const ChatBox = ({ channels }) => {
+const ChatBox = ({ channel }) => {
   const { sendMessage } = useContext(ServerContext);
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { currentChannelId } = channels;
+  const { currentChannelId } = channel;
   const inputText = useRef(null);
 
   return (
