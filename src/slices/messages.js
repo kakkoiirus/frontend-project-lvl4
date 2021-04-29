@@ -15,7 +15,7 @@ export const messagesSlice = createSlice({
   extraReducers: {
     [setInitialState]: (state, action) => {
       const { messages } = action.payload;
-      Object.assign(state, { messages: [] });
+      state.messages = [];
       state.messages.push(...messages);
     },
   },
