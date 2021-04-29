@@ -33,10 +33,10 @@ const Chat = () => {
 
       const { channels, currentChannelId, messages } = res.data;
 
-      dispatch(setInitialState({ channels, currentChannelId, messages }));
       setStatus('finished');
+      dispatch(setInitialState({ channels, currentChannelId, messages }));
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }, []);
 
