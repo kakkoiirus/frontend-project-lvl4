@@ -68,6 +68,7 @@ const ChatBox = ({ channel }) => {
                 onBlur={handleBlur}
                 disabled={isSubmitting}
                 isInvalid={errors.body && touched.body}
+                data-testid="new-message"
                 ref={inputText}
               />
               <InputGroup.Append>
