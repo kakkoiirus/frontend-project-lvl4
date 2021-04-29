@@ -9,9 +9,9 @@ export const channelsSlice = createSlice({
   reducers: {
     setInitialState: (state, action) => {
       const { channels, currentChannelId } = action.payload;
-      state.channels = [];
+      Object.assign(state, { channels: [] });
       state.channels.push(...channels);
-      state.currentChannelId = currentChannelId;
+      Object.assign(state, { currentChannelId });
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
