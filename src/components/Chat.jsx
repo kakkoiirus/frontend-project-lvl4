@@ -39,7 +39,7 @@ const Chat = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     (channels && currentChannelId)
