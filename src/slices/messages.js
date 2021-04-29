@@ -13,9 +13,11 @@ export const messagesSlice = createSlice({
     },
   },
   extraReducers: {
-    [setInitialState]: (state, action) => (
-      action.payload
-    ),
+    [setInitialState]: (state, action) => {
+      const { messages } = action.payload;
+      Object.assign(state, { messages: [] });
+      state.messages.push(...messages);
+    },
   },
 });
 
