@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Col, Row } from 'react-bootstrap';
@@ -20,6 +20,7 @@ const getAuthHeader = () => {
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const [status, setStatus] = useState('loading');
 
   useEffect(async () => {
     const authHeader = getAuthHeader();
@@ -33,20 +34,24 @@ const Chat = () => {
       const { channels, currentChannelId, messages } = res.data;
 
       dispatch(setInitialState({ channels, currentChannelId, messages }));
+      setStatus('finished');
     } catch (err) {
       console.log(err);
     }
   }, []);
 
   return (
-    <Row className="flex-grow-1 h-75 pb-3">
-      <Channels />
-      <Col className="h-100">
-        <div className="d-flex flex-column h-100">
-          <Messages />
-        </div>
-      </Col>
-    </Row>
+    status !== 'loading'
+    && (
+      <Row className="flex-grow-1 h-75 pb-3">
+        <Channels />
+        <Col className="h-100">
+          <div className="d-flex flex-column h-100">
+            <Messages />
+          </div>
+        </Col>
+      </Row>
+    )
   );
 };
 
