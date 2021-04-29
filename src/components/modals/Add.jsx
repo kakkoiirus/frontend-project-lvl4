@@ -79,8 +79,8 @@ const AddChannel = ({ modalInfo }) => {
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="chatName">
                 <FormControl
-                  type="text"
                   name="chatName"
+                  aria-label="add channel"
                   className="mb-2"
                   value={values.chatName}
                   onChange={handleChange}

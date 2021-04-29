@@ -82,7 +82,6 @@ const RenameChannel = ({ modalInfo }) => {
               <Form.Group controlId="chatName">
                 <FormControl
                   autoFocus
-                  type="text"
                   name="chatName"
                   className="mb-2"
                   value={values.chatName}
