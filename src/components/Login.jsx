@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -47,14 +48,14 @@ const Login = () => {
             onSubmit={async ({ username, password }) => {
               try {
                 const res = await axios.post(
-                  '/api/v1/login',
+                  routes.loginApiPath(),
                   { username, password },
                 );
 
                 const { token } = res.data;
 
                 auth.logIn({ token, username });
-                history.push('/');
+                history.push(routes.rootPath());
               } catch (err) {
                 if (err.response.status === 401) {
                   setAuthFailed(true);

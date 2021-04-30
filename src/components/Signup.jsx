@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const Signup = () => {
   const [authError, setAuthError] = useState(null);
@@ -63,7 +64,7 @@ const Signup = () => {
             onSubmit={async ({ username, password }, { setSubmitting }) => {
               try {
                 const res = await axios.post(
-                  '/api/v1/signup',
+                  routes.signupApiPath(),
                   { username, password },
                 );
 
@@ -71,7 +72,7 @@ const Signup = () => {
                 auth.logIn({ token, username });
 
                 setSubmitting(false);
-                history.push('/');
+                history.push(routes.rootPath());
               } catch (err) {
                 setSubmitting(false);
                 if (err.response.status === 409) {

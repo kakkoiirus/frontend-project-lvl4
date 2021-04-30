@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Col, Row, Spinner } from 'react-bootstrap';
 
 import { setInitialState } from '../slices/channels.js';
+import routes from '../routes.js';
 
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -28,7 +29,7 @@ const Chat = () => {
 
       try {
         const res = await axios.get(
-          '/api/v1/data',
+          routes.dataApiPath(),
           { headers: authHeader },
         );
 

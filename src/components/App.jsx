@@ -15,6 +15,8 @@ import Login from './Login.jsx';
 import NotFound from './NotFound.jsx';
 import Signup from './Signup.jsx';
 
+import routes from '../routes.js';
+
 const AuthProvider = ({ children }) => {
   const data = localStorage.getItem('user');
 
@@ -55,7 +57,7 @@ const PrivateRoute = ({ children, path }) => {
       path={path}
       render={({ location }) => (auth.loggedIn
         ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
+        : <Redirect to={{ pathname: routes.loginPath(), state: { from: location } }} />)}
     />
   );
 };
@@ -66,13 +68,13 @@ const App = () => (
       <div className="d-flex flex-column h-100">
         <Nav />
         <Switch>
-          <PrivateRoute exact path="/">
+          <PrivateRoute exact path={routes.rootPath()}>
             <Chat />
           </PrivateRoute>
-          <Route path="/login">
+          <Route path={routes.loginPath()}>
             <Login />
           </Route>
-          <Route path="/signup">
+          <Route path={routes.signupPath()}>
             <Signup />
           </Route>
           <Route>
