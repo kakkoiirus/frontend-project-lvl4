@@ -11,7 +11,7 @@ const Messages = () => {
 
   useEffect(() => {
     if (messagesRef.current) {
-      messagesRef.current.scrollIntoView(false);
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -19,14 +19,14 @@ const Messages = () => {
     <>
       <div
         className="chat-messages overflow-auto mb-3"
+        ref={messagesRef}
       >
         {messages
           .filter((m) => m.channelId === channel.currentChannelId)
-          .map((m, index, arr) => (
+          .map((m) => (
             <div
               key={m.id}
               className="text-break"
-              ref={arr.length - 1 === index ? messagesRef : null}
             >
               <b>
                 {m.username}
