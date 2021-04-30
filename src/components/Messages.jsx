@@ -7,7 +7,7 @@ const Messages = () => {
   const { messages } = useSelector((state) => state.messagesData);
   const channel = useSelector((state) => state.channelsData);
 
-  const messagesRef = useRef();
+  const messagesRef = useRef(null);
 
   useEffect(() => {
     if (messagesRef.current) {
