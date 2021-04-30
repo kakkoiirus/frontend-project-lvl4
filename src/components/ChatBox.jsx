@@ -13,24 +13,24 @@ import {
 import ServerContext from '../contexts/serverContext.js';
 import useAuth from '../hooks/index.jsx';
 
-setLocale({
-  mixed: {
-    required: 'errors.required',
-  },
-});
-
-const MessageSchema = Yup.object().shape({
-  body: Yup.string()
-    .required()
-    .trim(),
-});
-
 const ChatBox = ({ channel }) => {
   const { sendMessage } = useContext(ServerContext);
   const { t } = useTranslation();
   const { user } = useAuth();
   const { currentChannelId } = channel;
   const inputText = useRef(null);
+
+  setLocale({
+    mixed: {
+      required: 'errors.required',
+    },
+  });
+
+  const MessageSchema = Yup.object().shape({
+    body: Yup.string()
+      .required()
+      .trim(),
+  });
 
   return (
     <div className="mt-auto">
