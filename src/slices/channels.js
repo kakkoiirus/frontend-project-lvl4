@@ -1,4 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+
+const DEFAULT_CHANNEL_ID = 1;
 
 export const channelsSlice = createSlice({
   name: 'channelsData',
@@ -14,17 +17,17 @@ export const channelsSlice = createSlice({
       state.channels.push(action.payload);
     },
     setCurrentChannel: (state, action) => {
-      Object.assign(state, { currentChannelId: action.payload.id });
+      state.currentChannelId = action.payload.id;
     },
     removeChannel: (state, action) => {
       const { id } = action.payload;
 
       if (state.currentChannelId === id) {
-        Object.assign(state, { currentChannelId: 1 });
+        state.currentChannelId = DEFAULT_CHANNEL_ID;
       }
 
       const newChannels = state.channels.filter((c) => c.id !== id);
-      Object.assign(state, { channels: newChannels });
+      state.channels = newChannels;
     },
     renameChannel: (state, action) => {
       const { id, name } = action.payload;
