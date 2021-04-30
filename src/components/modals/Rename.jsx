@@ -33,6 +33,8 @@ const RenameChannel = ({ modalInfo }) => {
 
   const RenameChannelSchema = Yup.object().shape({
     chatName: Yup.string()
+      .min(3, 'errors.chatNameLength')
+      .max(20, 'errors.chatNameLength')
       .required()
       .trim(),
   });

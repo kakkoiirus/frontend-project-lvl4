@@ -96,7 +96,7 @@ const Channels = () => {
           +
         </Button>
       </div>
-      <Nav className="flex-column" fill variant="pills">
+      <Nav className="flex-column overflow-auto" fill variant="pills">
         <Nav.Item>
           {channels.map(({ id, name, removable }) => (
             !removable ? getNonRemovableNav(id, name) : getRemovableNav(id, name)

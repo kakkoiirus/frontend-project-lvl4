@@ -40,6 +40,7 @@ export default {
       passwordLength: 'Не менее 6 символов',
       passwordNotEqual: 'Пароли должны совпадать',
       userAlreadyExist: 'Такой пользователь уже существует',
+      chatNameLength: 'От 3 до 20 символов',
     },
   },
 };
