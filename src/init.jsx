@@ -16,10 +16,10 @@ import { addMessage } from './slices/messages.js';
 import App from './components/App.jsx';
 
 export default async (socket) => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && process.env.ROLLBAR_TOKEN) {
     const rollbar = new Rollbar();
     rollbar.configure({
-      accessToken: '273512464d8d489e8d131086a5634ce7',
+      accessToken: process.env.ROLLBAR_TOKEN,
       captureUncaught: true,
       captureUnhandledRejections: true,
       payload: {
