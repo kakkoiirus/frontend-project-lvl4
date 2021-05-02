@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Col, Row, Spinner } from 'react-bootstrap';
 
 import { setInitialState } from '../slices/channels.js';
+import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 import Channels from './Channels.jsx';
@@ -22,6 +23,7 @@ const getAuthHeader = () => {
 const Chat = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((state) => state.channelsData);
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +37,9 @@ const Chat = () => {
 
         dispatch(setInitialState(res.data));
       } catch (err) {
+        if (err.response.status === 401) {
+          auth.logOut();
+        }
         throw new Error(err);
       }
     };
