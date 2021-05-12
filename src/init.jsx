@@ -2,6 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
+import { setLocale } from 'yup';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import Rollbar from 'rollbar';
 
@@ -38,6 +39,12 @@ export default async (socket) => {
         escapeValue: false,
       },
     });
+
+  setLocale({
+    mixed: {
+      required: 'errors.required',
+    },
+  });
 
   const store = configureStore({
     reducer: rootReducer,

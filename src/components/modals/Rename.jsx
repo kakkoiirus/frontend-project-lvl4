@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap';
 import _ from 'lodash';
 import * as Yup from 'yup';
-import { setLocale } from 'yup';
 
 import ServerContext from '../../contexts/serverContext.js';
 import { closeModal } from '../../slices/modal.js';
@@ -24,12 +23,6 @@ const RenameChannel = ({ modalInfo }) => {
   const { t } = useTranslation();
 
   const channel = _.find(channels, (c) => c.id === channelId);
-
-  setLocale({
-    mixed: {
-      required: 'errors.required',
-    },
-  });
 
   const RenameChannelSchema = Yup.object().shape({
     chatName: Yup.string()

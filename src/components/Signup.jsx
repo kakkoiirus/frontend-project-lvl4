@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { setLocale } from 'yup';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
@@ -22,12 +21,6 @@ const Signup = () => {
   const { t } = useTranslation();
   const inputRef = useRef();
   const auth = useAuth();
-
-  setLocale({
-    mixed: {
-      required: 'errors.required',
-    },
-  });
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()

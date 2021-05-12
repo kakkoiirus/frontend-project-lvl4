@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { setLocale } from 'yup';
 import { Formik } from 'formik';
 import {
   Form,
@@ -19,12 +18,6 @@ const ChatBox = ({ channel }) => {
   const { user } = useAuth();
   const { currentChannelId } = channel;
   const inputText = useRef(null);
-
-  setLocale({
-    mixed: {
-      required: 'errors.required',
-    },
-  });
 
   const MessageSchema = Yup.object().shape({
     body: Yup.string()

@@ -9,7 +9,6 @@ import {
   FormControl,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { setLocale } from 'yup';
 
 import ServerContext from '../../contexts/serverContext.js';
 import { closeModal } from '../../slices/modal.js';
@@ -22,12 +21,6 @@ const AddChannel = ({ modalInfo }) => {
   const { t } = useTranslation();
 
   const inputField = useRef(null);
-
-  setLocale({
-    mixed: {
-      required: 'errors.required',
-    },
-  });
 
   const AddChannelSchema = Yup.object().shape({
     chatName: Yup.string()
