@@ -76,7 +76,7 @@ const Signup = () => {
               } catch (err) {
                 setSubmitting(false);
                 if (err.response.status === 409) {
-                  setAuthError('errors.alreadyExist');
+                  setAuthError('errors.userAlreadyExist');
                   inputRef.current.select();
                   return;
                 }
