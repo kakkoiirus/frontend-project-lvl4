@@ -48,7 +48,7 @@ const Signup = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []);
 
   return (
     <Container fluid>
