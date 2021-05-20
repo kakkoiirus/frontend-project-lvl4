@@ -101,7 +101,7 @@ const Login = () => {
                     value={values.password}
                     isInvalid={!isValid || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{!isValid ? t('login.error') : null}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{(!isValid || authFailed) ? t('login.error') : null}</Form.Control.Feedback>
                 </Form.Group>
                 <Button
                   variant="outline-primary"
