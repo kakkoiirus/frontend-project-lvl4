@@ -23,11 +23,15 @@ const RenameChannel = ({ modalInfo }) => {
   const { t } = useTranslation();
 
   const channel = _.find(channels, (c) => c.id === channelId);
+  const channelsNames = channels
+    .filter((item) => item.id !== channelId)
+    .map((item) => item.name);
 
   const RenameChannelSchema = Yup.object().shape({
     chatName: Yup.string()
       .min(3, 'errors.chatNameLength')
       .max(20, 'errors.chatNameLength')
+      .notOneOf(channelsNames, 'errors.channelAlreadyExist')
       .required()
       .trim(),
   });

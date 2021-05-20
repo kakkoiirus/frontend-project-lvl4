@@ -41,6 +41,7 @@ export default {
       passwordNotEqual: 'Пароли должны совпадать',
       userAlreadyExist: 'Такой пользователь уже существует',
       chatNameLength: 'От 3 до 20 символов',
+      channelAlreadyExist: 'Такой канал уже существует',
     },
   },
 };

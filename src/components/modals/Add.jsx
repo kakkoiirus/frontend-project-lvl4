@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import {
@@ -17,15 +17,19 @@ import { setCurrentChannel } from '../../slices/channels.js';
 const AddChannel = ({ modalInfo }) => {
   const { isOpened } = modalInfo;
   const { createChannel } = useContext(ServerContext);
+  const { channels } = useSelector((state) => state.channelsData);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const inputField = useRef(null);
 
+  const channelsNames = channels.map((channel) => channel.name);
+
   const AddChannelSchema = Yup.object().shape({
     chatName: Yup.string()
       .min(3, 'errors.chatNameLength')
       .max(20, 'errors.chatNameLength')
+      .notOneOf(channelsNames, 'errors.channelAlreadyExist')
       .required()
       .trim(),
   });
