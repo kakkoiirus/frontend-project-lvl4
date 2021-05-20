@@ -101,7 +101,7 @@ const Signup = () => {
                     isInvalid={(errors.username && touched.username) || authError}
                     ref={inputRef}
                   />
-                  <Form.Control.Feedback type="invalid">{errors.username && touched.username ? t(errors.username) : null}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{ t(errors.username) }</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="password">
                   <Form.Label>{t('signup.password')}</Form.Label>
@@ -116,7 +116,7 @@ const Signup = () => {
                     value={values.password}
                     isInvalid={(errors.password && touched.password) || authError}
                   />
-                  <Form.Control.Feedback type="invalid">{errors.password && touched.password ? t(errors.password) : null}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{ t(errors.password) }</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="confirmPassword">
                   <Form.Label>{t('signup.confirmPassword')}</Form.Label>
@@ -132,11 +132,7 @@ const Signup = () => {
                     isInvalid={(errors.confirmPassword && touched.confirmPassword) || authError}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {
-                      (errors.confirmPassword && touched.confirmPassword) || authError
-                        ? t(authError) || t(errors.confirmPassword)
-                        : null
-                    }
+                    { t(authError) || t(errors.confirmPassword) }
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button
