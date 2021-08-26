@@ -7,6 +7,8 @@ React (with hooks), Redux Toolkit, Socket.IO, Formik, Bootstrap, yup
 ## Demo
 * [on Heroku](https://fierce-fortress-99523.herokuapp.com/)
 
+user: admin / password: admin
+
 ## Requirements
 
 * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
